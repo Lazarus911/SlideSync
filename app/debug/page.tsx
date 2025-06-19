@@ -18,14 +18,14 @@ export default function DebugPage() {
   
 
   const runGoogleOAuthDiagnostics = async () => {
-    setTesting(true)
-    setResults([])
+  setTesting(true)
+  setResults([])
 
-if (typeof window !== "undefined") {
-  const currentDomain = window.location.origin
-  addResult("Current Domain", currentDomain, "info")
-  addResult("Current URL", window.location.href, "info")
-}
+  if (typeof window !== "undefined") {
+    const currentDomain = window.location.origin
+    addResult("Current Domain", currentDomain, "info")
+    addResult("Current URL", window.location.href, "info")
+  }
 
 
     try {
