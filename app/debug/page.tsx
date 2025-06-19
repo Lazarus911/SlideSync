@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { supabase } from "@/lib/supabase"
@@ -15,6 +15,11 @@ export default function DebugPage() {
   const addResult = (test: string, result: any, status: "success" | "error" | "info" = "info") => {
     setResults((prev) => [...prev, { test, result, status, timestamp: new Date().toISOString() }])
   }
+  useEffect(() => {
+  const currentDomain = window.location.origin
+  addResult("Current Domain", currentDomain, "info")
+  addResult("Current URL", window.location.href, "info")
+}, [])
 
   const runGoogleOAuthDiagnostics = async () => {
     setTesting(true)
@@ -28,11 +33,6 @@ export default function DebugPage() {
         supabase.supabaseKey ? "Present" : "Missing",
         supabase.supabaseKey ? "success" : "error",
       )
-
-      // Test 2: Current domain info
-      const currentDomain = window.location.origin
-      addResult("Current Domain", currentDomain, "info")
-      addResult("Current URL", window.location.href, "info")
 
       // Test 3: Expected redirect URLs
       const expectedRedirectUrls = [
