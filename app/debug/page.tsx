@@ -15,15 +15,18 @@ export default function DebugPage() {
   const addResult = (test: string, result: any, status: "success" | "error" | "info" = "info") => {
     setResults((prev) => [...prev, { test, result, status, timestamp: new Date().toISOString() }])
   }
-  useEffect(() => {
-  const currentDomain = window.location.origin
-  addResult("Current Domain", currentDomain, "info")
-  addResult("Current URL", window.location.href, "info")
-}, [])
+  
 
   const runGoogleOAuthDiagnostics = async () => {
     setTesting(true)
     setResults([])
+
+if (typeof window !== "undefined") {
+  const currentDomain = window.location.origin
+  addResult("Current Domain", currentDomain, "info")
+  addResult("Current URL", window.location.href, "info")
+}
+
 
     try {
       // Test 1: Basic Supabase connection
